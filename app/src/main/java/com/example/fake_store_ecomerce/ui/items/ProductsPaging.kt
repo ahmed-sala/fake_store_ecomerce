@@ -18,11 +18,13 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.example.fake_store_ecomerce.data.models.ProductResponse
+import com.example.fake_store_ecomerce.db.CartViewModel
 
 @Composable
 fun ProductsPagingList(
     products: LazyPagingItems<ProductResponse>,
     navController: NavController,
+    cartViewModel: CartViewModel,
     padding: PaddingValues = PaddingValues(0.dp)
 ){
     LazyColumn(
@@ -38,7 +40,7 @@ fun ProductsPagingList(
         ) { index ->
             val product = products[index]
             if (product != null) {
-                ProductItem(product = product, navController = navController)
+                ProductItem(product = product, navController = navController,cartViewModel= cartViewModel)
             }
         }
 
