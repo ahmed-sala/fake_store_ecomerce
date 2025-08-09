@@ -25,10 +25,11 @@ import com.example.fake_store_ecomerce.ui.theme.Fake_store_ecomerceTheme
 
 
 class MainActivity : ComponentActivity() {
+    val homeViewmodel: HomeViewmodel by viewModels()
+    val categoryViewmodel: CategoryViewmodel by viewModels()
+    val productsDetailsViewmodel: ProductsDetailsViewmodel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
-        val homeViewmodel: HomeViewmodel by viewModels()
-        val categoryViewmodel: CategoryViewmodel by viewModels()
-        val productsDetailsViewmodel: ProductsDetailsViewmodel by viewModels()
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
