@@ -22,6 +22,9 @@ class MainActivity : ComponentActivity() {
     private var networkStatusHandler: NetworkStatusHandler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val homeViewmodel: HomeViewmodel by viewModels()
+        val categoryViewmodel: CategoryViewmodel by viewModels()
+        val productsDetailsViewmodel: ProductsDetailsViewmodel by viewModels()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
