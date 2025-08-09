@@ -53,10 +53,15 @@ class MainActivity : ComponentActivity() {
                                 viewModel = categoryViewmodel
                             )
                         }
-                        composable(Screen.ProductDetails.route) {
+                        // Fix this part - proper navigation with productId parameter
+                        composable("${Screen.ProductDetails.route}/{productId}") { backStackEntry ->
+                            val productId = backStackEntry.arguments?.getString("productId")?.toIntOrNull() ?: 0
                             ProductDetailsScreen(
-                                navController = navController,
-                                viewModel = productsDetailsViewmodel
+                                viewModel = productsDetailsViewmodel,
+                                productId = productId,
+                                onNavigateBack = {
+                                    navController.popBackStack() // This fixes the crash
+                                }
                             )
                         }
                         composable(Screen.Cart.route) {
