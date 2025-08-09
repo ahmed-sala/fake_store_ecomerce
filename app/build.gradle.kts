@@ -1,7 +1,10 @@
+import com.android.tools.build.libraries.metadata.MavenRepo
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,6 +40,11 @@ android {
     buildFeatures {
         compose = true
     }
+        repositories {
+            google()
+            mavenCentral()
+            gradlePluginPortal()
+        }
 }
 
 dependencies {
@@ -52,6 +60,12 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.gsonConverter)
     implementation(libs.okhttpLoggingInterceptor)
+    // room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.room)
+    ksp(libs.androidx.room.compiler)
+
     implementation("androidx.navigation:navigation-compose:2.7.7")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
