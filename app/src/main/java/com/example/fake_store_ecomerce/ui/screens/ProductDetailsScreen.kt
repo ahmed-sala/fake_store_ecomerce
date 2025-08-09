@@ -3,11 +3,13 @@ package com.example.fake_store_ecomerce.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -29,6 +32,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,23 +47,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.fake_store.networking.ApiResult
 import com.example.fake_store_ecomerce.data.models.ProductResponse
+import com.example.fake_store_ecomerce.db.CartViewModel
 import com.example.fake_store_ecomerce.ui.managers.ProductsDetailsViewmodel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsScreen(
     productId: Int,
+    cartViewModel: CartViewModel,
     onNavigateBack: () -> Unit,
     viewModel: ProductsDetailsViewmodel = viewModel()
 ) {
     val productState by viewModel.productState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val cartItems by cartViewModel.cartItems.collectAsState()
 
     LaunchedEffect(productId) {
         viewModel.getProductsById(productId)
@@ -98,9 +106,14 @@ fun ProductDetailsScreen(
                     LoadingContent()
                 }
                 is ApiResult.Success -> {
+                    val product=(productState as ApiResult.Success<ProductResponse>).data
+                    val cartItem = cartItems.find { it.productId == product.id }
+                    val quantity = cartItem?.quantity ?: 0
                     ProductContent(
                         product = (productState as ApiResult.Success<ProductResponse>).data,
                         modifier = Modifier.fillMaxSize(),
+                        cartViewModel = cartViewModel,
+                        quantity = quantity
                     )
                 }
                 is ApiResult.Error -> {
@@ -131,7 +144,9 @@ private fun LoadingContent() {
 @Composable
 private fun ProductContent(
     product: ProductResponse,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    cartViewModel: CartViewModel,
+    quantity: Int
 ) {
     Column(
         modifier = modifier
@@ -183,7 +198,7 @@ private fun ProductContent(
 
         product.price?.let { price ->
             Text(
-                text = "${price}",
+                text = "$${price}",
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
@@ -216,17 +231,86 @@ private fun ProductContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            onClick = {  }, // TODO: Implement add to cart functionality
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Icon(Icons.Default.ShoppingCart, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Add to Cart", style = MaterialTheme.typography.titleMedium)
+        if (quantity == 0) {
+            Button(
+                onClick = {
+                    cartViewModel.addToCart(product)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(Icons.Default.ShoppingCart, contentDescription = null)
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Add To Cart")
+            }
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (quantity > 1) {
+                    IconButton(
+                        onClick = {
+                            cartViewModel.removeAllFromCart(product.id ?: 0)
+                        }
+                    ) {
+                        Icon(
+                            Icons.Default.Delete,
+                            contentDescription = "Delete all",
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
+                } else {
+                    Spacer(modifier = Modifier.size(48.dp)) // Placeholder to maintain spacing
+                }
+
+                if (quantity > 1) {
+                    TextButton(
+                        onClick = {
+                            cartViewModel.removeFromCart(product.id ?: 0)
+                        }
+                    ) {
+                        Text(
+                            text = "-",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                } else {
+                    IconButton(
+                        onClick = {
+                            cartViewModel.removeFromCart(product.id ?: 0)
+                        }
+                    ) {
+                        Icon(
+                            Icons.Default.Delete,
+                            contentDescription = "Delete",
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+
+                Text(
+                    text = quantity.toString(),
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
+                )
+
+                TextButton(
+                    onClick = {
+                        cartViewModel.addToCart(product)
+                    }
+                ) {
+                    Text(
+                        text = "+",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
         }
+
     }
 }
 

@@ -1,8 +1,7 @@
 package com.example.fake_store_ecomerce.navigator
 
-import HomeScreen
+import com.example.fake_store_ecomerce.ui.screens.HomeScreen
 import HomeViewmodel
-import android.R.attr.type
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -10,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.fake_store_ecomerce.db.CartViewModel
 import com.example.fake_store_ecomerce.ui.managers.CategoryViewmodel
 import com.example.fake_store_ecomerce.ui.managers.ProductsDetailsViewmodel
 import com.example.fake_store_ecomerce.ui.screens.CartScreen
@@ -22,7 +22,8 @@ fun AppNavigation(
     homeViewmodel: HomeViewmodel,
     categoryViewmodel: CategoryViewmodel,
     productsDetailsViewmodel: ProductsDetailsViewmodel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    cartViewModel: CartViewModel
 ) {
     NavHost(
         navController = navController,
@@ -32,7 +33,8 @@ fun AppNavigation(
         composable(Screen.Home.route) {
             HomeScreen(
                 navController = navController,
-                viewModel = homeViewmodel
+                viewModel = homeViewmodel,
+                cartViewModel = cartViewModel
             )
         }
 
@@ -53,12 +55,16 @@ fun AppNavigation(
                 onNavigateBack = {
                     navController.popBackStack()
                 },
-                viewModel = productsDetailsViewmodel
+                viewModel = productsDetailsViewmodel,
+                cartViewModel = cartViewModel
+
             )
         }
 
         composable(Screen.Cart.route) {
-            CartScreen(navController = navController)
+            CartScreen(navController = navController,
+                cartViewModel = cartViewModel
+            )
         }
     }
 }

@@ -11,7 +11,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.fake_store_ecomerce.db.CartViewModel
 import com.example.fake_store_ecomerce.navigator.AppNavigation
 import com.example.fake_store_ecomerce.networking.NetworkManager
 import com.example.fake_store_ecomerce.networking.NetworkStatusHandler
@@ -23,7 +25,8 @@ import com.example.fake_store_ecomerce.ui.managers.ProductsDetailsViewmodel
     homeViewmodel: HomeViewmodel,
     categoryViewmodel: CategoryViewmodel,
     productsDetailsViewmodel: ProductsDetailsViewmodel,
-    networkManager: NetworkManager
+    networkManager: NetworkManager,
+    cartViewModel: CartViewModel
 ) {
     val navController = rememberNavController()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -50,7 +53,8 @@ import com.example.fake_store_ecomerce.ui.managers.ProductsDetailsViewmodel
             homeViewmodel = homeViewmodel,
             categoryViewmodel = categoryViewmodel,
             productsDetailsViewmodel = productsDetailsViewmodel,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(0.dp),
+            cartViewModel = cartViewModel
         )
     }
 }
