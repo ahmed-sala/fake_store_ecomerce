@@ -2,11 +2,14 @@ package com.example.fake_store_ecomerce.navigator
 
 import HomeScreen
 import HomeViewmodel
+import android.R.attr.type
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.fake_store_ecomerce.ui.managers.CategoryViewmodel
 import com.example.fake_store_ecomerce.ui.managers.ProductsDetailsViewmodel
 import com.example.fake_store_ecomerce.ui.screens.CartScreen
@@ -40,9 +43,16 @@ fun AppNavigation(
             )
         }
 
-        composable(Screen.ProductDetails.route) {
+        composable(
+            route = Screen.ProductDetails.route,
+            arguments = listOf(navArgument("productId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val productId = backStackEntry.arguments?.getInt("productId") ?: 0
             ProductDetailsScreen(
-                navController = navController,
+                productId = productId,
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
                 viewModel = productsDetailsViewmodel
             )
         }

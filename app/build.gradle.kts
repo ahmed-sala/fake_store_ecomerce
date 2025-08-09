@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.retrofit)
     implementation(libs.gsonConverter)
-    implementation(libs.coil.compose)
     implementation(libs.androidx.paging.compose)
     implementation(libs.okhttpLoggingInterceptor)
     implementation(libs.androidx.navigation.compose)
