@@ -1,5 +1,7 @@
 package com.example.fake_store_ecomerce
 
+import HomeScreen
+import HomeViewmodel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,10 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.layout.fillMaxSize
 import com.example.fake_store_ecomerce.navigator.Screen
 import com.example.fake_store_ecomerce.ui.managers.CategoryViewmodel
-import com.example.fake_store_ecomerce.ui.managers.HomeViewmodel
 import com.example.fake_store_ecomerce.ui.managers.ProductsDetailsViewmodel
 import com.example.fake_store_ecomerce.ui.screens.CategoriesScreen
-import com.example.fake_store_ecomerce.ui.screens.HomeScreen
 import com.example.fake_store_ecomerce.ui.screens.ProductDetailsScreen
 import com.example.fake_store_ecomerce.ui.screens.CartScreen
 import com.example.fake_store_ecomerce.ui.theme.Fake_store_ecomerceTheme
