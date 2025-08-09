@@ -23,7 +23,8 @@ import com.example.fake_store_ecomerce.data.models.ProductResponse
 fun ProductsPagingList(
     products: LazyPagingItems<ProductResponse>,
     navController: NavController,
-    padding: PaddingValues = PaddingValues(0.dp)
+    padding: PaddingValues = PaddingValues(0.dp),
+    modifier: Modifier
 ){
     LazyColumn(
         modifier = Modifier
