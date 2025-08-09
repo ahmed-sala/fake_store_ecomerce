@@ -1,5 +1,5 @@
-FakeStore Product Viewer
-Project Overview
+#FakeStore Product Viewer
+##Project Overview
 This Android app fetches and displays products from the FakeStore API using Jetpack Compose. It demonstrates networking, JSON data parsing, UI composition, state management, and screen navigation.
 
 Features
