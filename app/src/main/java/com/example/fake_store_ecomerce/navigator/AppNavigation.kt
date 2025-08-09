@@ -15,6 +15,7 @@ import com.example.fake_store_ecomerce.ui.managers.ProductsDetailsViewmodel
 import com.example.fake_store_ecomerce.ui.screens.CartScreen
 import com.example.fake_store_ecomerce.ui.screens.CategoriesScreen
 import com.example.fake_store_ecomerce.ui.screens.ProductDetailsScreen
+import com.example.fake_store_ecomerce.ui.screens.SplashScreen
 
 @Composable
 fun AppNavigation(
@@ -27,9 +28,12 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = "splash",
         modifier = modifier
     ) {
+        composable("splash") {
+            SplashScreen(navController = navController)
+        }
         composable(Screen.Home.route) {
             HomeScreen(
                 navController = navController,
