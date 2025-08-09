@@ -1,10 +1,9 @@
-import com.android.tools.build.libraries.metadata.MavenRepo
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+//    alias(libs.plugins.hilt)
 }
 
 android {
@@ -30,50 +29,63 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
-        repositories {
-            google()
-            mavenCentral()
-            gradlePluginPortal()
-        }
 }
 
 dependencies {
-
+    // Core Android dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    // Compose BOM and UI
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.retrofit)
-    implementation(libs.gsonConverter)
-    implementation(libs.coil.compose)
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.okhttpLoggingInterceptor)
-    // room
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-    implementation(libs.androidx.room)
-    ksp(libs.androidx.room.compiler)
-
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.paging.common)
     implementation(libs.ui)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.runtime)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.gsonConverter)
+    implementation(libs.okhttpLoggingInterceptor)
+
+    // Image loading
+    implementation(libs.coil.compose)
+
+    // Paging
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.common)
+
+    // Room (if needed)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // Hilt for Dependency Injection
+//    implementation(libs.hilt.android)
+//    implementation(libs.hilt.navigation.compose)
+//    ksp(libs.hilt.compiler)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
