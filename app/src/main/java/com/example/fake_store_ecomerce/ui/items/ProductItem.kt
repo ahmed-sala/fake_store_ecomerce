@@ -44,7 +44,6 @@ fun ProductItem(product: ProductResponse, navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                // Fix: Use createRoute() with the actual product ID
                 product.id?.let { productId ->
                     navController.navigate(Screen.ProductDetails.createRoute(productId))
                 }
@@ -59,7 +58,7 @@ fun ProductItem(product: ProductResponse, navController: NavController) {
                 modifier = Modifier
                     .size(80.dp)
                     .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop // Added for better image display
+                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {

@@ -156,7 +156,6 @@ private fun ProductContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Product Title
         Text(
             text = product.title ?: "Unknown Product",
             style = MaterialTheme.typography.headlineMedium,
@@ -182,7 +181,6 @@ private fun ProductContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Price - Note: Your API returns Int for price, converting to proper currency format
         product.price?.let { price ->
             Text(
                 text = "${price}",
@@ -194,7 +192,6 @@ private fun ProductContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Description
         product.description?.let { description ->
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -219,9 +216,8 @@ private fun ProductContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Add to Cart Button
         Button(
-            onClick = { /* No functionality - just UI placeholder */ }, // Remove TODO()
+            onClick = {  }, // TODO: Implement add to cart functionality
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -262,117 +258,3 @@ private fun ErrorContent(
         }
     }
 }
-
-// Navigation Setup (in your main navigation composable)
-//import androidx.navigation.NavHostController
-//import androidx.navigation.compose.NavHost
-//import androidx.navigation.compose.composable
-//import androidx.navigation.compose.rememberNavController
-
-//@Composable
-//fun AppNavigation(
-//    navController: NavHostController = rememberNavController()
-//) {
-//    NavHost(
-//        navController = navController,
-//        startDestination = "products"
-//    ) {
-//        composable("products") {
-//            HomeScreen(
-//                onProductClick = { productId ->
-//                    navController.navigate("product_details/$productId")
-//                },
-//                onNavigateToCategories = {
-//                    navController.navigate("categories")
-//                }
-//            )
-//        }
-//
-//        composable("product_details/{productId}") { backStackEntry ->
-//            val productId = backStackEntry.arguments?.getString("productId")?.toIntOrNull() ?: 0
-//            ProductDetailsScreen(
-//                productId = productId,
-//                onNavigateBack = {
-//                    navController.popBackStack()
-//                }
-//            )
-//        }
-//
-//        composable("categories") {
-//            CategoriesScreen(
-//                onNavigateBack = {
-//                    navController.popBackStack()
-//                },
-//                onCategoryClick = { categoryId ->
-//                    navController.navigate("category_products/$categoryId")
-//                }
-//            )
-//        }
-//    }
-//}
-
-// Example of how to navigate to product details from your product list
-//@Composable
-//fun ProductItem(
-//    product: ProductResponse,
-//    onProductClick: (Int) -> Unit,
-//    onAddToCart: () -> Unit
-//) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp)
-//            .clickable { product.id?.let { onProductClick(it) } },
-//        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-//    ) {
-//        Column(
-//            modifier = Modifier.padding(16.dp)
-//        ) {
-//            // Product image
-//            product.images?.firstOrNull()?.let { imageUrl ->
-//                AsyncImage(
-//                    model = imageUrl,
-//                    contentDescription = product.title,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(200.dp)
-//                        .clip(RoundedCornerShape(8.dp)),
-//                    contentScale = ContentScale.Crop
-//                )
-//            }
-//
-//            Spacer(modifier = Modifier.height(8.dp))
-//
-//            // Product title
-//            Text(
-//                text = product.title ?: "Unknown Product",
-//                style = MaterialTheme.typography.titleMedium,
-//                fontWeight = FontWeight.Bold,
-//                maxLines = 2,
-//                overflow = TextOverflow.Ellipsis
-//            )
-//
-//            Spacer(modifier = Modifier.height(4.dp))
-//
-//            // Product price
-//            Text(
-//                text = "${product.price ?: 0}",
-//                style = MaterialTheme.typography.titleLarge,
-//                color = MaterialTheme.colorScheme.primary,
-//                fontWeight = FontWeight.Bold
-//            )
-//
-//            Spacer(modifier = Modifier.height(8.dp))
-//
-//            // Add to cart button
-//            Button(
-//                onClick = onAddToCart,
-//                modifier = Modifier.fillMaxWidth()
-//            ) {
-//                Icon(Icons.Default.ShoppingCart, contentDescription = null)
-//                Spacer(modifier = Modifier.width(8.dp))
-//                Text("Add to Cart")
-//            }
-//        }
-//    }
-//}
