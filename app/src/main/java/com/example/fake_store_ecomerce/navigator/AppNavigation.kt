@@ -17,6 +17,7 @@ import com.example.fake_store_ecomerce.ui.screens.CategoriesScreen
 import com.example.fake_store_ecomerce.ui.screens.ProductDetailsScreen
 import com.example.fake_store_ecomerce.ui.screens.SplashScreen
 
+
 @Composable
 fun AppNavigation(
     navController: NavHostController,
@@ -64,6 +65,9 @@ fun AppNavigation(
 
             )
         }
+
+
+
 
         composable(Screen.Cart.route) {
             CartScreen(navController = navController,

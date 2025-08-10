@@ -46,6 +46,7 @@ android {
 
 dependencies {
 
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -57,7 +58,8 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.runtime)
-    implementation("io.coil-kt:coil-compose:2.4.0")
+
+
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
